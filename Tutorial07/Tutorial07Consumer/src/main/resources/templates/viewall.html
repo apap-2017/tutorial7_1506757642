@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>View All Students</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<div th:replace="fragments/fragment :: header"></div>
+	<h1>All Students</h1>
+	<table id="myTable">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>NPM</th>
+				<th>Name</th>
+				<th>GPA</th>
+				<th>Cum Laude</th>
+				<th>Delete</th>
+				<th>Update</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="student,iterationStatus: ${students}">
+				<td th:text="${iterationStatus.count}"></td>
+				<td th:text="${student.npm}"></td>
+				<td th:text="${student.name}"></td>
+				<td th:text="${student.gpa}"></td>
+				<td th:if="${student.gpa >= 3.49}">Yes</td>
+				<td th:unless="${student.gpa >= 3.49}">No</td>
+				<td><a th:href="'/student/delete/' + ${student.npm}">Delete
+						Data</a></td>
+				<td><a th:href="'/student/update/' + ${student.npm}">Update
+						Data</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		$(document).ready(function() {
+			$('#myTable').DataTable();
+		});
+		
+	</script>
+	<div th:replace="fragments/fragment :: footer"></div>
+</body>
+<style>
+footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 1rem;
+	text-align: center;
+}
+</style>
+</html>
